@@ -9,101 +9,117 @@
       background-color: #000;
       color: #00FF00;
       font-family: Helvetica, sans-serif;
-      padding: 20px;
+      padding: 10px 15px;
       margin: 0;
+      font-size: 12px; /* smaller base font */
     }
 
     .title {
       color: #FFD700;
-      font-size: 24px;
-      margin-bottom: 20px;
+      font-size: 18px; /* smaller */
+      margin-bottom: 10px;
       text-align: center;
     }
 
-    label, select, input, button {
+    .total-top {
       font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #FFD700;
+    }
+
+    label, select, input, button {
+      font-size: 12px; /* smaller */
     }
 
     .refinery {
       display: flex;
       flex-direction: column;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .refinery input {
       background: #111;
       color: #00FF00;
       border: none;
-      padding: 8px;
-      margin-top: 4px;
+      padding: 5px;
+      margin-top: 2px;
+      font-size: 12px;
     }
 
     .item-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 10px; /* less gap */
     }
 
     .item {
       background: #111;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
     }
 
     .item-label {
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 6px;
       align-items: center;
     }
 
     .row input, .row select {
-      flex: 1 1 120px;
-      padding: 6px;
+      flex: 1 1 100px; /* smaller minimum width */
+      padding: 4px 6px;
       background: #1a1a1a;
       color: #00FF00;
       border: none;
+      font-size: 12px;
     }
 
     .row button {
       background: red;
       color: white;
       border: none;
-      padding: 6px 8px;
+      padding: 4px 6px;
       font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
     }
 
     .result {
-      margin-top: 8px;
+      margin-top: 4px;
       background: #000;
-      padding: 6px;
+      padding: 4px;
       font-family: monospace;
+      font-size: 11px;
+      min-height: 18px;
     }
 
     .total {
-      font-size: 20px;
-      margin-top: 30px;
+      font-size: 16px;
+      margin-top: 20px;
       text-align: center;
       font-weight: bold;
     }
 
     .actions {
-      margin-top: 20px;
+      margin-top: 15px;
       text-align: center;
     }
 
     .actions button {
       background: #FFD700;
       color: black;
-      padding: 10px 15px;
-      margin: 5px;
+      padding: 6px 10px;
+      margin: 3px;
       border: none;
       font-weight: bold;
+      font-size: 12px;
       cursor: pointer;
     }
 
@@ -123,6 +139,8 @@
 
   <div class="title">SCYield2Sell Calculator</div>
 
+  <div class="total-top" id="totalDisplayTop">Total: 0.00 aUEC</div>
+
   <div class="refinery">
     <label>Refinery Location:
       <input id="refineryTitle" placeholder="Enter refinery name..." />
@@ -139,12 +157,12 @@
     <button class="clear" onclick="clearAll()">Clear All</button>
   </div>
 
-
   <script src="itemPrices.js"></script>
   <script src="itemColors.js"></script>
   <script>
     const itemsContainer = document.getElementById('itemsContainer');
     const totalDisplay = document.getElementById('totalDisplay');
+    const totalDisplayTop = document.getElementById('totalDisplayTop');
     const entries = {};
 
     for (const [item, locations] of Object.entries(itemPrices)) {
@@ -218,7 +236,9 @@
         result.textContent = `${units} × ${price} = ${itemTotal.toLocaleString()} aUEC (${location})`;
         total += itemTotal;
       }
-      totalDisplay.textContent = `Total: ${total.toLocaleString()} aUEC`;
+      const formattedTotal = total.toLocaleString();
+      totalDisplay.textContent = `Total: ${formattedTotal} aUEC`;
+      totalDisplayTop.textContent = `Total: ${formattedTotal} aUEC`;
     }
 
     function clearAll() {
@@ -229,6 +249,7 @@
         result.textContent = '';
       }
       totalDisplay.textContent = "Total: 0.00 aUEC";
+      totalDisplayTop.textContent = "Total: 0.00 aUEC";
     }
 
     function exportToFile(type) {
