@@ -6,11 +6,11 @@ const itemColors = {
   "Bexalite": "#006400",
   "Gold": "#006400",
   "Diamond": "#006400",
-  "Borase": "#0000FF",
-  "Laranite": "#0000FF",
-  "Beryl": "#0000FF",
-  "Agricium": "#0000FF",
-  "Hephaestanite": "#0000FF",
+  "Borase": "#ADD8E6",
+  "Laranite": "#ADD8E6",
+  "Beryl": "#ADD8E6",
+  "Agricium": "#ADD8E6",
+  "Hephaestanite": "#ADD8E6",
   "Recycled Material Composite": "#FFD700",
   "Construction Material": "#FF0000"
 };
