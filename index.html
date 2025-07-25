@@ -12,12 +12,12 @@
       font-family: Helvetica, sans-serif;
       padding: 10px 15px;
       margin: 0;
-      font-size: 12px; /* smaller base font */
+      font-size: 12px;
     }
 
     .title {
       color: #FFD700;
-      font-size: 18px; /* smaller */
+      font-size: 18px;
       margin-bottom: 10px;
       text-align: center;
     }
@@ -31,7 +31,7 @@
     }
 
     label, select, input, button {
-      font-size: 12px; /* smaller */
+      font-size: 12px;
     }
 
     .refinery {
@@ -46,13 +46,12 @@
       border: none;
       padding: 5px;
       margin-top: 2px;
-      font-size: 12px;
     }
 
     .item-container {
       display: flex;
       flex-direction: column;
-      gap: 10px; /* less gap */
+      gap: 10px;
     }
 
     .item {
@@ -71,15 +70,15 @@
       flex-wrap: wrap;
       gap: 6px;
       align-items: center;
+      margin-top: 5px;
     }
 
     .row input, .row select {
-      flex: 1 1 100px; /* smaller minimum width */
+      flex: 1 1 100px;
       padding: 4px 6px;
       background: #1a1a1a;
       color: #00FF00;
       border: none;
-      font-size: 12px;
     }
 
     .row button {
@@ -146,6 +145,17 @@
     <label>Refinery Location:
       <input id="refineryTitle" placeholder="Enter refinery name..." />
     </label>
+  </div>
+
+  <!-- ✅ New: Duration and Ready Time Section -->
+  <div class="refinery">
+    <label>Order estimated ready at:</label>
+    <div class="row">
+      <input id="durationHours" type="number" min="0" placeholder="Hours" />
+      <input id="durationMinutes" type="number" min="0" placeholder="Minutes" />
+      <button onclick="calculateReadyTime()">Calculate</button>
+    </div>
+    <div id="readyTimeResult" class="result"></div>
   </div>
 
   <div id="itemsContainer" class="item-container"></div>
@@ -244,13 +254,38 @@
 
     function clearAll() {
       document.getElementById('refineryTitle').value = '';
+      document.getElementById('durationHours').value = '';
+      document.getElementById('durationMinutes').value = '';
+      document.getElementById('readyTimeResult').textContent = '';
+
       for (const item in entries) {
         const { input, result } = entries[item];
         input.value = '';
         result.textContent = '';
       }
+
       totalDisplay.textContent = "Total: 0.00 aUEC";
       totalDisplayTop.textContent = "Total: 0.00 aUEC";
+    }
+
+    function calculateReadyTime() {
+      const hours = parseInt(document.getElementById('durationHours').value) || 0;
+      const minutes = parseInt(document.getElementById('durationMinutes').value) || 0;
+
+      if (hours < 0 || minutes < 0) {
+        document.getElementById('readyTimeResult').textContent = "Invalid input.";
+        return;
+      }
+
+      const now = new Date();
+      now.setHours(now.getHours() + hours);
+      now.setMinutes(now.getMinutes() + minutes);
+
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString();
+
+      document.getElementById('readyTimeResult').textContent =
+        `Estimated ready at: ${timeStr} (${dateStr})`;
     }
 
     function exportToFile(type) {
