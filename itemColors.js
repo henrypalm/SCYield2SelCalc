@@ -10,7 +10,5 @@ const itemColors = {
   "Laranite": "#ADD8E6",
   "Beryl": "#ADD8E6",
   "Agricium": "#ADD8E6",
-  "Hephaestanite": "#ADD8E6",
-  "Recycled Material Composite": "#FFD700",
-  "Construction Material": "#FF0000"
+  "Hephaestanite": "#ADD8E6"
 };
